@@ -1,0 +1,18 @@
+version: '3'
+
+COPY: ${JAR_FILE} javacruitment.jar
+
+run: java -jar ${JAR_FILE}
+
+EXPOSE: 8080
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=java
+      - POSTGRES_USER=candidate
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./src/sql/init_schema.sql:/docker-entrypoint-initdb.d/init_schema.sql
